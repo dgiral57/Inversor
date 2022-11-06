@@ -1,14 +1,13 @@
 #ifndef DECODER
 #define DECODER
 #include <Arduino.h>
-#include <BluetoothSerial.h>
+
 
 class Decoder{
 private:
     int frequency;
     bool start;
     bool stop;
-    BluetoothSerial serialBT;
 public:
     Decoder();
     int getFreq();
@@ -17,5 +16,7 @@ public:
     void decodeMessage();
     void resetStop();
     void resetStart();
+    void connect();
+    void encode(String message);
 };
 #endif

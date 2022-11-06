@@ -1,14 +1,14 @@
 #include <Arduino.h>
 #include <decoder.h>
 
-#define transistor1 12
-#define transistor2 13
-#define transistor3 14
-#define transistor4 25
+#define transistor3 13
+#define transistor2 25
+#define transistor1 14
+#define transistor6 12
 #define transistor5 26
-#define transistor6 27
+#define transistor4 27
 
-uint8_t estado = 0;
+int estado = 0;
 Decoder decoder;
 
 
@@ -20,6 +20,8 @@ void setup() {
   pinMode(26,OUTPUT);
   pinMode(27,OUTPUT);
   Serial.begin(115200);
+  decoder.connect();
+  
 }
 
 void timerMicros(float setupTime) {
@@ -31,6 +33,7 @@ void timerMicros(float setupTime) {
 void MEF(){
   switch (estado){
   case 0:
+    decoder.encode("0");
     digitalWrite(transistor1,0);
     digitalWrite(transistor2,0);
     digitalWrite(transistor3,0);
@@ -46,6 +49,7 @@ void MEF(){
       estado = 1;
     break;
   case 1:
+    decoder.encode("1");
     digitalWrite(transistor1,1);
     digitalWrite(transistor2,1);
     digitalWrite(transistor3,1);
@@ -53,7 +57,7 @@ void MEF(){
     digitalWrite(transistor5,0);
     digitalWrite(transistor6,0);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -63,6 +67,7 @@ void MEF(){
     }
     break;
   case 2:
+    decoder.encode("2");
     digitalWrite(transistor1,0);
     digitalWrite(transistor2,1);
     digitalWrite(transistor3,1);
@@ -71,7 +76,7 @@ void MEF(){
     digitalWrite(transistor6,0);
     timerMicros(10);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -80,6 +85,7 @@ void MEF(){
     }
     break;
   case 3:
+    decoder.encode("3");
     digitalWrite(transistor1,0);
     digitalWrite(transistor2,1);
     digitalWrite(transistor3,1);
@@ -87,7 +93,7 @@ void MEF(){
     digitalWrite(transistor5,0);
     digitalWrite(transistor6,0);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -97,6 +103,7 @@ void MEF(){
     }
     break;
   case 4:
+    decoder.encode("4");
     digitalWrite(transistor1,0);
     digitalWrite(transistor2,0);
     digitalWrite(transistor3,1);
@@ -105,7 +112,7 @@ void MEF(){
     digitalWrite(transistor6,0);
     timerMicros(10);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -114,6 +121,7 @@ void MEF(){
     }
     break;
   case 5:
+    decoder.encode("5");
     digitalWrite(transistor1,0);
     digitalWrite(transistor2,0);
     digitalWrite(transistor3,1);
@@ -121,7 +129,7 @@ void MEF(){
     digitalWrite(transistor5,1);
     digitalWrite(transistor6,0);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -131,6 +139,7 @@ void MEF(){
     }
     break;
   case 6:
+    decoder.encode("6");
     digitalWrite(transistor1,0);
     digitalWrite(transistor2,0);
     digitalWrite(transistor3,0);
@@ -139,7 +148,7 @@ void MEF(){
     digitalWrite(transistor6,0);
     timerMicros(10);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -148,6 +157,7 @@ void MEF(){
     }
     break;
   case 7:
+    decoder.encode("7");
     digitalWrite(transistor1,0);
     digitalWrite(transistor2,0);
     digitalWrite(transistor3,0);
@@ -155,7 +165,7 @@ void MEF(){
     digitalWrite(transistor5,1);
     digitalWrite(transistor6,1);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -165,6 +175,7 @@ void MEF(){
     }
     break;
   case 8:
+    decoder.encode("8");
     digitalWrite(transistor1,0);
     digitalWrite(transistor2,0);
     digitalWrite(transistor3,0);
@@ -173,7 +184,7 @@ void MEF(){
     digitalWrite(transistor6,1);
     timerMicros(10);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -182,6 +193,7 @@ void MEF(){
     }
     break;
   case 9:
+    decoder.encode("9");
     digitalWrite(transistor1,1);
     digitalWrite(transistor2,0);
     digitalWrite(transistor3,0);
@@ -189,7 +201,7 @@ void MEF(){
     digitalWrite(transistor5,1);
     digitalWrite(transistor6,1);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -199,6 +211,7 @@ void MEF(){
     }
     break;
   case 10:
+    decoder.encode("10");
     digitalWrite(transistor1,1);
     digitalWrite(transistor2,0);
     digitalWrite(transistor3,0);
@@ -207,7 +220,7 @@ void MEF(){
     digitalWrite(transistor6,1);
     timerMicros(10);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -216,6 +229,7 @@ void MEF(){
     }
     break;
   case 11:
+    decoder.encode("11");
     digitalWrite(transistor1,1);
     digitalWrite(transistor2,1);
     digitalWrite(transistor3,0);
@@ -223,7 +237,7 @@ void MEF(){
     digitalWrite(transistor5,0);
     digitalWrite(transistor6,1);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
@@ -233,6 +247,7 @@ void MEF(){
     }
     break;
   case 12:
+    decoder.encode("12");
     digitalWrite(transistor1,1);
     digitalWrite(transistor2,1);
     digitalWrite(transistor3,0);
@@ -241,7 +256,7 @@ void MEF(){
     digitalWrite(transistor6,0);
     timerMicros(10);
     decoder.decodeMessage();
-    if (decoder.getStop()){
+    if (decoder.getStop() || decoder.getFreq() == 0){
       decoder.resetStop();
       estado = 0;
     }
